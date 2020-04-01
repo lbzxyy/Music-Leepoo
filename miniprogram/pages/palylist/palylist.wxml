@@ -1,2 +1,9 @@
-<!--pages/palylist/palylist.wxml-->
-<text>pages/palylist/palylist.wxml</text>
+<view class="" hover-class="none" hover-stop-propagation="false">
+  <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="2000" duration="500">
+    <block wx:for="{{swiperImgUrls}}" wx:key="url">
+      <swiper-item>
+        <image class="playlist-img" src="{{item.url}}" mode="widthFix"/>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
