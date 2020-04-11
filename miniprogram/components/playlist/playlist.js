@@ -13,7 +13,6 @@ Component({
    */
   observers: {
     ['playlist.playCount'](count) {
-      console.log(count,'count');
       this.setData({
         _count: this._tranNumber(count, 2)
       })
@@ -44,6 +43,17 @@ Component({
         let decimal = numStr.substring(numStr.length - 8, numStr.length - 8 + point)
         return parseFloat(parseInt(num / 100000000) + '.' + decimal) + '亿'
       }
+    },
+    // 前往音乐列表页
+    goToMusiclist() {
+      wx.navigateTo({
+        url: `../../pages/musiclist/musiclist?playlistId=${this.properties.playlist.id}`,
+        success: (result)=>{
+          
+        },
+        fail: ()=>{},
+        complete: ()=>{}
+      });
     }
   }
 })
