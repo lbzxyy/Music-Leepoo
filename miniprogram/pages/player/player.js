@@ -1,45 +1,37 @@
-// pages/musiclist/musiclist.js
+// miniprogram/pages/player.js
+let musiclist = []
+// 当前正在播放的索引
+let nowPlayingIndex = 0;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    picUrl: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options,'options')
-    wx.showLoading({
-      title: '加载中...',
-      mask: true,
-    });
-    wx.cloud.callFunction({
-      name: 'music',
-      data: {
-        playlistId: options.playlistId,
-        $url: 'musiclist'
-      }
-    }).then( res => {
-      const pl = res.result.playlist
-      this.setData({
-        musiclist: pl.tracks,
-        listInfo: {
-          coverImgUrl: pl.coverImgUrl,
-          name: pl.name,
-        }
-      })
-      this._setMusiclist()
-      wx.hideLoading();
-    })
+    console.log(options)
+    nowPlayingIndex = options.index;
+    musiclist = wx.getStorageSync('musiclist');
+    this._loadMusicDetail()
+
   },
 
-  // 存储
-  _setMusiclist() {
-    wx.setStorageSync('musiclist', this.data.musiclist);
+  //
+  _loadMusicDetail() {
+    // 拿到当前歌曲信息
+    let music = musiclist[nowPlayingIndex]
+    wx.setNavigationBarTitle({
+      title: music.name,
+    });
+    this.setData({
+      picUrl: music.al.picUrl
+    })
   },
 
   /**
